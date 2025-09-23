@@ -44,7 +44,7 @@ public class Instructor extends Person {
     
     @Override
     public String getInfo() {
-        return super.getInfo() + String.format(", Department: %s, Teaching: %s", 
+        return super.getInfo() + String.format( "\n" + Department: %s + "\n" + "Teaching: %s"  + "\n" 
                                              department, teachingCourses.toString());
     }
 }
