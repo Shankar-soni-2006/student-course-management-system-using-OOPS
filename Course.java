@@ -82,7 +82,7 @@ public class Course {
     
     @Override
     public String toString() {
-        return String.format("Course[ID: %s, Name: %s, Credits: %d, Enrolled: %s, Capacity: %d/%d, Instructor: %s]",
+        return String.format("Course["ID: %s" + "\n" + "Name: %s" + "\n" + "Credits: %d" + "\n" + "Enrolled: %s" + "\n" + "Capacity: %d/%d"  + "\n" + "Instructor: %s]",
                            courseId, courseName, credits, enrolledStudents.toString(), enrolledStudents.size(), maxCapacity,
                            instructorId != null ? instructorId : "TBA");
     }
