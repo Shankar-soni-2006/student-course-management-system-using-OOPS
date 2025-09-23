@@ -40,7 +40,7 @@ public abstract class Person {
     public abstract String getRole();
     
     public String getInfo() {
-        return String.format("ID: %s" + "\n" + Name: %s + "\n" + Email: %s + "\n" + Role: %s"
+        return String.format("ID: %s" + "\n" + "Name: %s" + "\n" + "Email: %s" + "\n" + "Role: %s"
                            id, name, email, getRole());
     }
 }
