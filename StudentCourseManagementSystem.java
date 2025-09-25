@@ -19,21 +19,33 @@ public class StudentCourseManagementSystem {
         if (people.containsKey(id)) {
             throw new InvalidPersonDataException("Student ID already exists: " + id);
         }
-        people.put(id, new Student(id, name, email, major));
+        try {
+            people.put(id, new Student(id, name, email, major));
+        } catch (InvalidPersonDataException e) {
+            throw e;
+        }
     }
     
     public void addInstructor(String id, String name, String email, String department) throws InvalidPersonDataException {
         if (people.containsKey(id)) {
             throw new InvalidPersonDataException("Instructor ID already exists: " + id);
         }
-        people.put(id, new Instructor(id, name, email, department));
+        try {
+            people.put(id, new Instructor(id, name, email, department));
+        } catch (InvalidPersonDataException e) {
+            throw e;
+        }
     }
     
     public void addCourse(String courseId, String courseName, int credits, int maxCapacity) throws InvalidPersonDataException {
         if (courses.containsKey(courseId)) {
             throw new InvalidPersonDataException("Course ID already exists: " + courseId);
         }
-        courses.put(courseId, new Course(courseId, courseName, credits, maxCapacity));
+        try {
+            courses.put(courseId, new Course(courseId, courseName, credits, maxCapacity));
+        } catch (InvalidPersonDataException e) {
+            throw e;
+        }
     }
     
     public boolean enrollStudentInCourse(String studentId, String courseId) throws PersonNotFoundException, CourseNotFoundException, CourseCapacityException, InvalidPersonDataException {
@@ -52,7 +64,11 @@ public class StudentCourseManagementSystem {
         
         Student student = (Student) person;
         if (course.addStudent(studentId)) {
-            student.enrollInCourse(courseId);
+            try {
+                student.enrollInCourse(courseId);
+            } catch (InvalidPersonDataException e) {
+                throw e;
+            }
             return true;
         }
         return false;
@@ -73,8 +89,12 @@ public class StudentCourseManagementSystem {
         }
         
         Instructor instructor = (Instructor) person;
-        course.setInstructorId(instructorId);
-        instructor.assignCourse(courseId);
+        try {
+            course.setInstructorId(instructorId);
+            instructor.assignCourse(courseId);
+        } catch (InvalidPersonDataException e) {
+            throw e;
+        }
         return true;
     }
     
@@ -129,7 +149,6 @@ public class StudentCourseManagementSystem {
         info.append(String.format("Course[ID: %s, Name: %s, Credits: %d]", 
                    course.getCourseId(), course.getCourseName(), course.getCredits()));
         
-        // Add instructor name
         String instructorId = course.getInstructorId();
         if (instructorId != null) {
             Person instructor = people.get(instructorId);
@@ -139,7 +158,6 @@ public class StudentCourseManagementSystem {
             info.append(", Instructor: TBA");
         }
         
-        // Add enrolled student names
         List<String> studentNames = new ArrayList<>();
         for (String studentId : course.getEnrolledStudents()) {
             Person student = people.get(studentId);
